@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Days Celebration 2026</title>
+    <meta name="description" content="Team Days Celebration — vote, play AI Literacy games, and celebrate with the team!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons for clean, modern iconography -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Decorative ambient background blobs -->
+    <div class="bg-glow blob-1"></div>
+    <div class="bg-glow blob-2"></div>
+    <div class="bg-glow blob-3"></div>
+
+    <main class="app-container">
+        <!-- ================= LOGIN VIEW ================= -->
+        <section id="login-view" class="view-section active">
+            <div class="login-card glass-card">
+                <div class="card-header">
+                    <div class="logo-badge">
+                        <i data-lucide="sparkles" class="logo-icon animate-pulse-slow"></i>
+                    </div>
+                    <h1>Team Days <span>2026</span></h1>
+                    <p class="subtitle">Select your name and enter the password to join the celebration!</p>
+                </div>
+
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="username-select">Who are you?</label>
+                        <div class="select-wrapper">
+                            <i data-lucide="user" class="input-icon-left"></i>
+                            <select id="username-select" required>
+                                <option value="" disabled selected>Choose your name...</option>
+                                <option value="bharath">Bharath</option>
+                                <option value="bobby">Bobby</option>
+                                <option value="bogdan">Bogdan</option>
+                                <option value="bruno">Bruno</option>
+                                <option value="dominique">Dominique</option>
+                                <option value="geeta">Geeta</option>
+                                <option value="joel">Joel</option>
+                                <option value="kasim">Kasim</option>
+                                <option value="margaux">Margaux</option>
+                                <option value="pedro">Pedro</option>
+                                <option value="prakash">Prakash</option>
+                                <option value="rohan">Rohan</option>
+                                <option value="sagar">Sagar</option>
+                                <option value="stefaan">Stefaan</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="input-icon-right select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-input">Password</label>
+                        <div class="input-wrapper">
+                            <i data-lucide="lock" class="input-icon-left"></i>
+                            <input type="password" id="password-input" placeholder="•••••" required autocomplete="current-password">
+                            <button type="button" id="toggle-password" class="input-icon-right btn-icon" title="Toggle password visibility">
+                                <i data-lucide="eye" id="eye-icon"></i>
+                            </button>
+                        </div>
+                        <span class="helper-text">Hint: The default password is 12345</span>
+                    </div>
+
+                    <div id="login-error" class="error-message hidden">
+                        <i data-lucide="alert-circle"></i>
+                        <span id="error-text">Incorrect password. Please try again.</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span>Enter Celebration</span>
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= DASHBOARD VIEW ================= -->
+        <section id="dashboard-view" class="view-section hidden">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <i data-lucide="party-popper"></i>
+                    </div>
+                    <h2>Team Days</h2>
+                </div>
+                <div class="user-menu">
+                    <span class="user-greeting">Hey, <strong id="logged-in-user-name">User</strong>! 👋</span>
+                    <button id="game-arena-nav-btn" class="btn btn-secondary btn-sm">
+                        <i data-lucide="gamepad-2"></i>
+                        <span>Game Arena</span>
+                    </button>
+                    <button id="fun-ai-nav-btn" class="btn btn-secondary btn-sm">
+                        <i data-lucide="wand-2"></i>
+                        <span>Fun with AI</span>
+                    </button>
+                    <button id="logout-btn" class="btn btn-secondary btn-sm">
+                        <i data-lucide="log-out"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Section -->
+            <section class="hero-card glass-card">
+                <div class="hero-content">
+                    <span class="badge-accent animate-bounce-slow">🎉 Event is Live!</span>
+                    <h1>Let's Celebrate Our Team!</h1>
+                    <p>Welcome to the Team Days 2026. We are stronger, brighter, and better together. Click below to spread some joy!</p>
+                    <div class="hero-actions">
+                        <button id="celebrate-btn" class="btn btn-primary btn-lg ripple-effect">
+                            <i data-lucide="sparkles"></i>
+                            <span>Celebrate!</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-circle">
+                        <i data-lucide="trophy" class="visual-icon"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Bar -->
+            <section class="stats-section glass-card">
+                <div class="stats-info">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Team Members</span>
+                        <span class="stat-value">14</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-label">Participated</span>
+                        <span class="stat-value" id="participated-count">0</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-label">Participation Rate</span>
+                        <span class="stat-value" id="participation-rate">0%</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="participation-progress"></div>
+                </div>
+            </section>
+
+            <!-- Mood Poll Section -->
+            <section class="poll-section glass-card" id="poll-section">
+                <div class="section-header">
+                    <h3><i data-lucide="vote"></i> How's Your Mood Today?</h3>
+                    <p>Cast your vote! Your individual response is anonymous. Results unlock once all 14 members vote.</p>
+                </div>
+                
+                <!-- Voting Form -->
+                <div id="poll-voting-container">
+                    <div class="mood-cards-grid">
+                        <button class="mood-card" data-mood="caffeine">
+                            <span class="mood-emoji">☕</span>
+                            <span class="mood-title">Caffeine-Fueled</span>
+                            <span class="mood-desc">Hyper-productive, crushing tasks, coding at lightspeed.</span>
+                        </button>
+                        <button class="mood-card" data-mood="meeting">
+                            <span class="mood-emoji">📋</span>
+                            <span class="mood-title">Meeting Marathon</span>
+                            <span class="mood-desc">Scrum Master heaven, developer hell. Syncing about syncs.</span>
+                        </button>
+                        <button class="mood-card" data-mood="fire">
+                            <span class="mood-emoji">🔥</span>
+                            <span class="mood-title">"Everything is Fine"</span>
+                            <span class="mood-desc">Production is burning, sprint commitments are crying. Smiling through it.</span>
+                        </button>
+                        <button class="mood-card" data-mood="chillin">
+                            <span class="mood-emoji">⏳</span>
+                            <span class="mood-title">Waiting on Blockers</span>
+                            <span class="mood-desc">Chillin' in the lobby. I would work, but my hands are tied.</span>
+                        </button>
+                    </div>
+                    <div class="poll-actions">
+                        <button id="submit-vote-btn" class="btn btn-primary" disabled>
+                            <i data-lucide="check"></i>
+                            <span>Cast My Vote</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Already Voted Message -->
+                <div id="poll-voted-message" class="poll-voted-message hidden">
+                    <div class="voted-status-icon">
+                        <i data-lucide="check-circle" class="text-success"></i>
+                    </div>
+                    <h4>Vote Recorded!</h4>
+                    <p>You've cast your vote. We are waiting for all 14 team members to submit their mood before revealing the results.</p>
+                    <div class="voted-progress-info">
+                        <span id="voted-count-text">0 / 14 voted</span>
+                        <div class="voted-progress-bar-container">
+                            <div class="voted-progress-bar" id="voted-progress-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Timer & Unvoted List -->
+                    <div class="poll-pending-details">
+                        <div class="countdown-timer" id="countdown-timer-container">
+                            <i data-lucide="timer" class="timer-icon animate-pulse-slow"></i>
+                            <span id="poll-timer-display">02:00</span>
+                            <span class="timer-label" id="timer-label-text">remaining to vote</span>
+                        </div>
+                        <div class="unvoted-list">
+                            <span class="unvoted-label">Still waiting for:</span>
+                            <p id="unvoted-list-names">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Poll Results & AI Roast Section (Unlocked when all 14 voted) -->
+            <section class="results-section glass-card hidden" id="results-section">
+                <div class="section-header">
+                    <h3><i data-lucide="bar-chart-3"></i> Today's Mood Board Results</h3>
+                    <p>The votes are in! Here is how the team is feeling today, along with some AI-powered roasts.</p>
+                </div>
+
+                <div class="results-grid">
+                    <!-- Left Column: Poll Stats -->
+                    <div class="results-stats-panel">
+                        <h4>Vote Breakdown</h4>
+                        <div class="results-bars-container" id="results-bars-container">
+                            <!-- Dynamically injected progress bars -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: AI Roasts and Images -->
+                    <div class="ai-roasts-panel">
+                        <h4>🔥 The Top Mood Roasts (AI Generated)</h4>
+                        <div id="ai-loading-container" class="ai-loading">
+                            <div class="spinner"></div>
+                            <p>Consulting the AI Oracle... Generating roasts and painting masterpieces...</p>
+                        </div>
+                        <div id="ai-roasts-container" class="ai-roasts-container hidden">
+                            <!-- Dynamically injected top 2 roasts with images -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Participation Board -->
+            <section class="board-section">
+                <div class="section-header">
+                    <h3><i data-lucide="users"></i> Team Participation Status</h3>
+                    <p>See who has joined the celebration and voted so far.</p>
+                </div>
+                
+                <div class="team-grid" id="team-grid">
+                    <!-- Dynamic team cards will be injected here -->
+                </div>
+            </section>
+
+            <!-- Footer / Admin Control -->
+            <footer class="dashboard-footer">
+                <p>Team Days 2026 • Made with ❤️ for the Team</p>
+                <div class="admin-actions">
+                    <button id="simulate-votes-btn" class="btn btn-ghost btn-xs">
+                        <i data-lucide="play"></i>
+                        <span>Simulate All Votes (Test AI)</span>
+                    </button>
+                    <button id="reset-data-btn" class="btn btn-ghost btn-xs">
+                        <i data-lucide="refresh-cw"></i>
+                        <span>Reset Participation & Votes</span>
+                    </button>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ================= GAME ARENA VIEW (QUIZ) ================= -->
+        <section id="game-arena-view" class="view-section hidden">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <i data-lucide="gamepad-2"></i>
+                    </div>
+                    <h2>AI Literacy Arena</h2>
+                </div>
+                <div class="user-menu">
+                    <button id="back-to-dashboard-btn" class="btn btn-secondary btn-sm">
+                        <i data-lucide="arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="quiz-layout">
+                <!-- ================= QUIZ START SCREEN ================= -->
+                <div id="quiz-start-container" class="quiz-card glass-card">
+                    <div class="quiz-start-header">
+                        <div class="quiz-badge">
+                            <i data-lucide="brain"></i>
+                        </div>
+                        <h3>AI Literacy Challenge 🤖</h3>
+                        <p>Can you spot a deepfake? Tell AI text from human writing? These 7 questions will test your AI literacy — no pressure, just fun!</p>
+                    </div>
+
+                    <div class="quiz-instructions">
+                        <h5>How it works:</h5>
+                        <ul>
+                            <li><i data-lucide="check-circle-2"></i> 7 hand-picked questions on deepfakes &amp; AI.</li>
+                            <li><i data-lucide="check-circle-2"></i> Pick the answer you think is right.</li>
+                            <li><i data-lucide="check-circle-2"></i> No score, no pressure — just vibes! 🎉</li>
+                            <li><i data-lucide="check-circle-2"></i> Review answers &amp; learn at the end.</li>
+                        </ul>
+                    </div>
+
+                    <button id="start-quiz-btn" class="btn btn-primary btn-lg btn-block">
+                        <span>Start Challenge</span>
+                        <i data-lucide="play"></i>
+                    </button>
+                </div>
+
+                <!-- ================= QUIZ PLAYING SCREEN ================= -->
+                <div id="quiz-play-container" class="quiz-card glass-card hidden">
+                    <div class="quiz-progress-header">
+                        <span id="quiz-question-counter">Question 1 of 7</span>
+                        <div class="quiz-timer-wrapper">
+                            <i data-lucide="timer" class="timer-icon"></i>
+                            <span id="quiz-question-timer">02:00</span>
+                        </div>
+                        <div class="quiz-progress-bar-container">
+                            <div class="quiz-progress-bar-fill" id="quiz-progress-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question-body">
+                        <h4 id="quiz-question-text">Question text goes here?</h4>
+                        <p id="quiz-question-subtitle" class="quiz-question-subtitle hidden"></p>
+                        <div class="quiz-options-list" id="quiz-options-list">
+                            <!-- Options will be dynamically injected here -->
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button id="next-question-btn" class="btn btn-primary btn-block" disabled>
+                            <span id="next-btn-text">Next Question</span>
+                            <i data-lucide="chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ================= QUIZ RESULTS SCREEN ================= -->
+                <div id="quiz-results-container" class="hidden">
+                    <div class="results-layout">
+                        
+                        <!-- Left Panel: Summary & Leaderboard -->
+                        <div class="results-left-panel">
+                            <div class="quiz-card glass-card score-card" style="margin-bottom: 1.5rem;">
+                                <div class="score-glow">
+                                    <i data-lucide="party-popper"></i>
+                                </div>
+                                <h3>Challenge Complete!</h3>
+                                <div class="score-number" id="quiz-user-score">0 <span>/ 7</span></div>
+                                <p class="score-eval" id="quiz-score-eval">You've survived the AI Apocalypse! 🤖🔥</p>
+                                <button id="restart-quiz-btn" class="btn btn-secondary btn-sm btn-block">
+                                    <i data-lucide="refresh-cw"></i>
+                                    <span>Play Again</span>
+                                </button>
+                            </div>
+
+                            <!-- Leaderboard on Results Screen -->
+                            <div class="quiz-card glass-card quiz-leaderboard-section">
+                                <div class="leaderboard-header-msg">🏆 Those who are on the top should give a treat! 🍿🍕</div>
+                                <table class="leaderboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <th>Member</th>
+                                            <th>Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leaderboard-tbody">
+                                        <!-- Dynamically populated Top 5 -->
+                                    </tbody>
+                                </table>
+                                <div style="text-align: right; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+                                    <button id="clear-leaderboard-btn" class="btn btn-ghost btn-xs" style="color: var(--error); padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                        <i data-lucide="trash-2" style="width: 12px; height: 12px; margin-right: 4px; display: inline-block; vertical-align: middle;"></i>
+                                        <span>Clear Leaderboard</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Review Answers -->
+                        <div class="results-right-panel glass-card">
+                            <h4>🔍 Review Questions & Answers</h4>
+                            <p class="review-subtitle">Expand your AI literacy by reading the explanations below.</p>
+                            <div class="quiz-review-list" id="quiz-review-list">
+                                <!-- Dynamically injected question reviews -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <!-- ================= FUN WITH AI VIEW ================= -->
+        <section id="fun-ai-view" class="view-section hidden">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <i data-lucide="wand-2"></i>
+                    </div>
+                    <h2>Fun with AI (Opinion Wheel)</h2>
+                </div>
+                <div class="user-menu">
+                    <button id="fun-ai-back-btn" class="btn btn-secondary btn-sm">
+                        <i data-lucide="arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Tabs to Switch Games -->
+            <div style="display: flex; justify-content: center; gap: 0.75rem; margin: 1.5rem auto; max-width: 400px; padding: 0 1rem;">
+                <button id="fun-ai-tab-wheel" class="btn btn-primary btn-sm btn-block" style="font-size: 0.85rem;">🎡 Opinion Wheel</button>
+                <button id="fun-ai-tab-dice" class="btn btn-secondary btn-sm btn-block" style="font-size: 0.85rem;">🎲 Dice Predictor</button>
+            </div>
+
+            <div class="fun-ai-layout" style="max-width: 800px; margin: 0 auto; padding: 0 1rem 2rem 1rem;">
+                <!-- 1. OPINION WHEEL CONTENT -->
+                <div id="fun-ai-wheel-content" class="quiz-card glass-card" style="text-align: center;">
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #a855f7, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎡 AI Opinion Wheel</h3>
+                        <p class="description-text" style="color: var(--text-secondary);">Spin the wheel to find out what each team member thinks about AI! 🔮</p>
+                    </div>
+
+                    <div class="wheel-container" style="position: relative; width: 340px; height: 340px; margin: 2rem auto; display: flex; align-items: center; justify-content: center;">
+                        <!-- Pointer -->
+                        <div class="wheel-pointer" style="position: absolute; top: -15px; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #f43f5e; z-index: 10; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));"></div>
+                        
+                        <!-- Canvas Wheel -->
+                        <canvas id="wheel-canvas" width="340" height="340" style="border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);"></canvas>
+                        
+                        <!-- Center Button/Pin -->
+                        <button id="spin-btn" class="btn btn-primary" style="position: absolute; width: 70px; height: 70px; border-radius: 50%; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5); border: 4px solid #1e1e38; cursor: pointer; text-transform: uppercase; z-index: 5; background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; padding: 0;">Spin</button>
+                    </div>
+
+                    <!-- Selected Member Result Card -->
+                    <div id="wheel-result-card" class="hidden" style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid var(--primary); border-radius: var(--radius-lg); text-align: center; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2); animation: fadeInUp 0.5s ease;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎤</div>
+                        <h4 id="wheel-result-name" style="font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem; letter-spacing: -0.02em;">Sagar</h4>
+                        <p style="color: var(--text-primary); font-size: 1.35rem; font-weight: 600; line-height: 1.5; max-width: 500px; margin: 0.5rem auto 0 auto; padding: 1rem; background: rgba(255,255,255,0.04); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.06);">
+                            "What do you think in general about AI?"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. DICE PREDICTOR CONTENT -->
+                <div id="fun-ai-dice-content" class="quiz-card glass-card hidden" style="text-align: center;">
+                    <style>
+                        .dice-scene {
+                            width: 100px;
+                            height: 100px;
+                            perspective: 600px;
+                            margin: 2.5rem auto;
+                        }
+                        .dice-cube {
+                            width: 100%;
+                            height: 100%;
+                            position: relative;
+                            transform-style: preserve-3d;
+                            transform: rotateX(-20deg) rotateY(30deg);
+                            transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.3, 1.1);
+                        }
+                        .dice-face {
+                            position: absolute;
+                            width: 100px;
+                            height: 100px;
+                            background: #111726;
+                            border: 3px solid var(--primary);
+                            border-radius: var(--radius-md);
+                            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 2.2rem;
+                            font-weight: 800;
+                            color: #fff;
+                        }
+                        /* Face positions */
+                        .face-1 { transform: rotateY(0deg) translateZ(50px); }
+                        .face-2 { transform: rotateY(90deg) translateZ(50px); }
+                        .face-3 { transform: rotateY(180deg) translateZ(50px); }
+                        .face-4 { transform: rotateY(-90deg) translateZ(50px); }
+                        .face-5 { transform: rotateX(90deg) translateZ(50px); }
+                        .face-6 { transform: rotateX(-90deg) translateZ(50px); }
+                        
+                        /* Selected state for predictions */
+                        .predict-btn.active {
+                            background: var(--primary) !important;
+                            border-color: #fff !important;
+                            color: #fff !important;
+                            box-shadow: 0 0 15px var(--primary-glow) !important;
+                        }
+                    </style>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, #ec4899, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎲 AI Dice Predictor</h3>
+                        <p class="description-text" style="color: var(--text-secondary);">Predict the next roll! Can you outsmart the AI in predicting random chance? 🔮</p>
+                    </div>
+
+                    <!-- AI Prediction Badge -->
+                    <div style="margin: 1.5rem auto; max-width: 320px; padding: 0.75rem; background: rgba(99, 102, 241, 0.08); border: 1px dashed var(--primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span style="font-size: 1.1rem;">🤖</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: #a5b4fc;">AI (Grok) Prediction:</span>
+                        <strong id="ai-dice-prediction-text" style="color: #ffd700; font-size: 1rem; text-shadow: 0 0 8px rgba(255,215,0,0.3);">Waiting...</strong>
+                    </div>
+
+                    <!-- 3D Dice Scene -->
+                    <div class="dice-scene">
+                        <div class="dice-cube" id="dice-cube">
+                            <div class="dice-face face-1">1</div>
+                            <div class="dice-face face-2">2</div>
+                            <div class="dice-face face-3">3</div>
+                            <div class="dice-face face-4">4</div>
+                            <div class="dice-face face-5">5</div>
+                            <div class="dice-face face-6">6</div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-weight: 500;">Select Your Predicted Number:</p>
+                        <div style="display: flex; justify-content: center; gap: 0.5rem;">
+                            <button class="btn btn-secondary predict-btn" data-val="1" style="width: 46px; height: 46px; padding: 0; border-radius: 50%;">1</button>
+                            <button class="btn btn-secondary predict-btn" data-val="2" style="width: 46px; height: 46px; padding: 0; border-radius: 50%;">2</button>
+                            <button class="btn btn-secondary predict-btn" data-val="3" style="width: 46px; height: 46px; padding: 0; border-radius: 50%;">3</button>
+                            <button class="btn btn-secondary predict-btn" data-val="4" style="width: 46px; height: 46px; padding: 0; border-radius: 50%;">4</button>
+                            <button class="btn btn-secondary predict-btn" data-val="5" style="width: 46px; height: 46px; padding: 0; border-radius: 50%;">5</button>
+                            <button class="btn btn-secondary predict-btn" data-val="6" style="width: 46px; height: 46px; padding: 0; border-radius: 50%;">6</button>
+                        </div>
+                    </div>
+
+                    <button id="roll-dice-btn" class="btn btn-primary" disabled style="max-width: 250px; margin: 0 auto 2rem auto;">
+                        <span>Roll Dice!</span>
+                        <i data-lucide="dice-5" style="width: 16px; height: 16px;"></i>
+                    </button>
+
+                    <!-- Dice Game Result Popup/Text -->
+                    <div id="dice-result-alert" class="hidden" style="margin-bottom: 2.5rem; padding: 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 1.05rem;">
+                        Result will be shown here.
+                    </div>
+
+                    <!-- Dice Leaderboard Section -->
+                    <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 2rem; text-align: left;">
+                        <h4 style="font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="trophy" style="color: #ffd700; width: 18px; height: 18px;"></i>
+                            <span>Dice Match Leaderboard (All Players + AI)</span>
+                        </h4>
+                        
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Participant</th>
+                                    <th style="text-align: right;">Accuracy (Correct/Total)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dice-leaderboard-tbody">
+                                <!-- Dynamic rows of all 14 members and AI -->
+                            </tbody>
+                        </table>
+                        <div style="text-align: right; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+                            <button id="clear-dice-leaderboard-btn" class="btn btn-ghost btn-xs" style="color: var(--error); padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i data-lucide="trash-2" style="width: 12px; height: 12px; margin-right: 4px; display: inline-block; vertical-align: middle;"></i>
+                                <span>Clear Leaderboard</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Canvas Confetti for celebration effects -->
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        <!-- Application logic -->
+        <script src="app.js"></script>
+    </body>
+</html>
