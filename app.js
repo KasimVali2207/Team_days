@@ -1292,9 +1292,15 @@ if (spinBtn) {
         const sectorAngle = 360 / numSectors;
         
         // Calculate stop angle (aligned with the pointer at top, i.e. 270 degrees)
-        const stopAngle = 270 - (targetIndex * sectorAngle) - (sectorAngle / 2);
+        let stopAngle = 270 - (targetIndex * sectorAngle) - (sectorAngle / 2);
+        stopAngle = stopAngle % 360;
+        if (stopAngle < 0) stopAngle += 360;
+        
+        let degreesToRotate = stopAngle - currentAngle;
+        if (degreesToRotate < 0) degreesToRotate += 360;
+        
         const totalSpins = 4; // Number of full spins
-        const finalAngle = currentAngle + (totalSpins * 360) + stopAngle;
+        const finalAngle = currentAngle + (totalSpins * 360) + degreesToRotate;
 
         const duration = 4000; // 4 seconds
         const startTime = performance.now();
