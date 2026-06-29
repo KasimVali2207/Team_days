@@ -513,67 +513,21 @@ async function loadOrGenerateAIRoasts(top1, top2) {
     }
 }
 
-// Fetch Roasts from Groq API
+// Fetch Roasts from Netlify Function
 async function fetchRoastsFromGroq(top1, top2) {
-    let apiKey = localStorage.getItem('groq_api_key');
-    if (!apiKey) {
-        apiKey = prompt('Please enter your Groq API Key to fetch live AI roasts:');
-        if (apiKey) {
-            localStorage.setItem('groq_api_key', apiKey);
-        } else {
-            throw new Error("No API Key provided.");
-        }
-    }
-    const model = 'llama-3.3-70b-versatile';
-
-    const systemPrompt = `You are a savage, hilarious AI comedian who roasts team dynamics. 
-You will be given the top 2 moods of a team during a "Team Days" celebration.
-Your job is to write a witty, lighthearted, and sarcastic roast for each of the top 2 moods.
-CRITICAL: The roasts must be highly relatable to both tech roles (developers who write code, fix bugs, and hate meetings) and non-tech roles (Scrum Masters who love agile metrics, tickets, and meetings).
-You must output a JSON object containing the roasts and detailed image generation prompts for each mood. Do NOT include any markdown formatting, backticks, or extra text. Return ONLY the raw JSON.
-
-JSON Structure:
-{
-  "top1": {
-    "roast": "Your roast text here",
-    "imagePrompt": "A highly detailed, funny cartoon illustration prompt describing this mood state, e.g., 'A stressed developer drinking coffee from a bucket while a scrum master points at a burning Kanban board, digital art, vibrant colors, funny'"
-  },
-  "top2": {
-    "roast": "Your roast text here",
-    "imagePrompt": "A highly detailed, funny cartoon illustration prompt describing this mood state"
-  }
-}`;
-
-    const userPrompt = `Here are the top 2 moods of our team today:
-1st Place Mood: "${top1.title}" (${top1.emoji}) - Description: "${top1.desc}". It got ${top1.count} votes.
-2nd Place Mood: "${top2.title}" (${top2.emoji}) - Description: "${top2.desc}". It got ${top2.count} votes.
-
-Please roast them! Include developers and Scrum Masters in your roasts.`;
-
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const response = await fetch('/.netlify/functions/getRoasts', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            model: model,
-            messages: [
-                { role: 'system', content: systemPrompt },
-                { role: 'user', content: userPrompt }
-            ],
-            temperature: 0.85,
-            response_format: { type: "json_object" }
-        })
+        body: JSON.stringify({ top1, top2 })
     });
 
     if (!response.ok) {
-        throw new Error(`Groq API responded with status ${response.status}`);
+        throw new Error(`Netlify Function responded with status ${response.status}`);
     }
 
-    const responseData = await response.json();
-    const contentText = responseData.choices[0].message.content.trim();
-    return JSON.parse(contentText);
+    return await response.json();
 }
 
 // Fallback Roasts in case API fails
